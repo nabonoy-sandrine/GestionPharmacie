@@ -1,0 +1,92 @@
+import java.util.ArrayList;
+
+class Fournisseur {
+    String codeFournisseur;
+    String nom;
+    String telephone;
+    String adresse;
+    String email;
+
+    static ArrayList<Fournisseur> liste = new ArrayList<>();
+
+    public Fournisseur(String codeFournisseur, String nom,
+                       String telephone, String adresse,
+                       String email) {
+        this.codeFournisseur = codeFournisseur;
+        this.nom             = nom;
+        this.telephone       = telephone;
+        this.adresse         = adresse;
+        this.email           = email;
+    }
+
+    
+    // METHODE 1 — ajouterFournisseur
+    
+    public static void ajouterFournisseur(String code, String nom,
+                                          String telephone,
+                                          String adresse,
+                                          String email) {
+        
+    }
+
+    
+    // METHODE 2 — afficherTous
+    
+    public static void afficherTous() {
+        
+    }
+
+    
+    // METHODE 3 — modifierFournisseur
+   
+    public static void modifierFournisseur(String code,
+                                           String nouveauNom,
+                                           String nouveauTel,
+                                           String nouvelleAdresse,
+                                           String nouveauEmail) {
+        
+    }
+
+    
+    // METHODE 4 — supprimerFournisseur
+   
+    public static void supprimerFournisseur(String code) {
+        
+    }
+
+    
+    // METHODE 5 — trouverParCode
+    
+    public static Fournisseur trouverParCode(String code) {
+        
+        return null;
+    }
+
+    // ════════════════════════════════════════
+    // SERIALISATION JSON
+    // ════════════════════════════════════════
+    public String toJson() {
+        return String.format(
+            "{\"codeFournisseur\":\"%s\",\"nom\":\"%s\",\"telephone\":\"%s\"," +
+            "\"adresse\":\"%s\",\"email\":\"%s\"}",
+            codeFournisseur, nom.replace("\"","\\\""),
+            telephone, adresse.replace("\"","\\\""), email
+        );
+    }
+
+    public static Fournisseur fromJson(String json) {
+        String code = extraireChamp(json, "codeFournisseur");
+        String nom  = extraireChamp(json, "nom");
+        String tel  = extraireChamp(json, "telephone");
+        String adr  = extraireChamp(json, "adresse");
+        String mail = extraireChamp(json, "email");
+        return new Fournisseur(code, nom, tel, adr, mail);
+    }
+
+    private static String extraireChamp(String json, String cle) {
+        String motif = "\"" + cle + "\":\"";
+        int debut = json.indexOf(motif) + motif.length();
+        int fin   = json.indexOf("\"", debut);
+        return json.substring(debut, fin);
+    }
+}
