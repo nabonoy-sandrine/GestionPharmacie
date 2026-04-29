@@ -16,6 +16,7 @@ class Client {
     
     
     public void afficher() {
-       
+               System.out.println("Client      : " + prenom + " " + nom);
+        System.out.println("Tel         : " + telephone);
     }
 }
