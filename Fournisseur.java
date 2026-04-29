@@ -26,7 +26,16 @@ class Fournisseur {
                                           String telephone,
                                           String adresse,
                                           String email) {
-        
+    for (Fournisseur f : liste) {
+        if (f.codeFournisseur.equals(code)) {
+            System.out.println("Erreur : Un fournisseur avec ce code existe déjà.");
+            return;
+        }
+  
+    }
+    liste.add(new Fournisseur(code, nom, telephone, adresse, email));
+    Sauvegarde.sauvegarder();
+    System.out.println("Fournisseur ajouté avec succès.");
     }
 
     
