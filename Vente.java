@@ -1,10 +1,7 @@
 import java.util.ArrayList;
 
 class Vente {
-
-  
     // ATTRIBUTS
-    
     String codeVente;
     Client client;
     String codeMedicament;
@@ -28,61 +25,45 @@ class Vente {
         this.dateVente      = dateVente;
     }
 
-    // ════════════════════════════════════════
-    // METHODE 1 — effectuerVente
-    // ETAPE 1 : Chercher le medicament
-    // ETAPE 2 : Verifier le stock
-    // ETAPE 3 : Calculer le montant
-    // ETAPE 4 : Diminuer le stock
-    // ETAPE 5 : Enregistrer la vente
-    // ETAPE 6 : Generer le ticket
-    // ════════════════════════════════════════
     public static void effectuerVente(String codeVente,
                                       Client client,
                                       String codeMedicament,
                                       int quantite,
                                       String dateVente) {
-        // ETAPE 1 — Chercher le medicament
+        // Chercher le medicament
         Medicament med = Medicament.trouverParCode(codeMedicament);
         if (med == null) {
             System.out.println("ERREUR : Medicament '" + codeMedicament + "' introuvable.");
             return;
         }
-
-        // ETAPE 2 — Verifier le stock
+        // Verifier le stock
         if (!Medicament.verifierStock(codeMedicament, quantite)) {
             System.out.println("ERREUR : Stock insuffisant. Stock disponible : "
                     + med.quantiteStock + " unite(s).");
             return;
         }
-
-        // ETAPE 3 — Calculer le montant
+        //  Calculer le montant
         double montant = med.prix * quantite;
-
-        // ETAPE 4 — Diminuer le stock automatiquement
+        //  Diminuer le stock automatiquement
         med.quantiteStock -= quantite;
-
-        // ETAPE 5 — Enregistrer la vente
+        // Enregistrer la vente
         Vente v = new Vente(codeVente, client, codeMedicament, quantite, montant, dateVente);
         liste.add(v);
         Sauvegarde.sauvegarder(); // Sauvegarde automatique
-
-        // ETAPE 6 — Generer le ticket
+        //  Generer le ticket
         genererTicket(codeVente, client, med, quantite, montant, dateVente);
     }
-
-    // ════════════════════════════════════════
     // METHODE 2 — genererTicket
-    // ════════════════════════════════════════
+    
     private static void genererTicket(String codeVente,
                                       Client client,
                                       Medicament med,
                                       int quantite,
                                       double montant,
                                       String dateVente) {
-        System.out.println("\n=========================================");
-        System.out.println("           TICKET DE CAISSE              ");
-        System.out.println("=========================================");
+        System.out.println("\n---------------------------------------");
+        System.out.println("           RECU CAISSE                  ");
+        System.out.println("-----------------------------------------");
         System.out.println("N Vente     : " + codeVente);
         System.out.println("Date        : " + dateVente);
         System.out.println("-----------------------------------------");
@@ -94,28 +75,28 @@ class Vente {
         System.out.printf ("Prix unit.  : %.0f FCFA%n", med.prix);
         System.out.println("-----------------------------------------");
         System.out.printf ("TOTAL       : %.0f FCFA%n", montant);
-        System.out.println("Stock rest. : " + med.quantiteStock + " unites");
-        System.out.println("=========================================");
+        // System.out.println("Stock rest. : " + med.quantiteStock + " unites");
+        System.out.println("-------------------------------------------");
         System.out.println("      Merci de votre visite !            ");
-        System.out.println("=========================================");
+        System.out.println("------------------------------------------");
     }
 
-    // ════════════════════════════════════════
-    // METHODE 3 — afficherHistorique
-    // ════════════════════════════════════════
+    
+    // afficherHistorique
+    
     public static void afficherHistorique() {
         if (liste.isEmpty()) {
             System.out.println("Aucune vente enregistree.");
             return;
         }
-        System.out.println("\n======================================================");
+        System.out.println("\n-------------------------------------------------------------------------");
         System.out.printf("%-10s %-15s %-12s %-10s %-10s %-10s%n",
                 "Code", "Client", "Medicament", "Qte", "Total", "Date");
-        System.out.println("------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------");
         for (Vente v : liste) {
             v.afficher();
         }
-        System.out.println("======================================================");
+        System.out.println("--------------------------------------------------------------------------");
         double totalGeneral = 0;
         for (Vente v : liste) totalGeneral += v.montantTotal;
         System.out.printf("Chiffre d affaires total : %.0f FCFA (%d vente(s))%n",
@@ -132,9 +113,9 @@ class Vente {
                 dateVente);
     }
 
-    // ════════════════════════════════════════
+    
     // SERIALISATION JSON
-    // ════════════════════════════════════════
+    
     public String toJson() {
         return String.format(
             "{\"codeVente\":\"%s\",\"clientNom\":\"%s\",\"clientPrenom\":\"%s\"," +
