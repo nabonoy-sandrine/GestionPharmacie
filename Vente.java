@@ -89,6 +89,8 @@ class Vente {
             System.out.println("Aucune vente enregistree.");
             return;
         }
+        System.out.println("\n---------------------------------------------------------------------------");
+        System.out.println("                   Historique des ventes                                      ");
         System.out.println("\n-------------------------------------------------------------------------");
         System.out.printf("%-10s %-15s %-12s %-10s %-10s %-10s%n",
                 "Code", "Client", "Medicament", "Qte", "Total", "Date");
