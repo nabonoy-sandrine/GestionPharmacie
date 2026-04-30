@@ -1,8 +1,8 @@
-#  GestionPharmacie — Système de Gestion d'Officine en Java
+#  Système de Gestion d'une pharmacie en Java
 
 ## Présentation du projet
 
-Ce projet est un **système de gestion de pharmacie** développé en Java dans le cadre du cours de **Programmation Orientée Objet (POO)
+Ce projet est un **système de gestion de pharmacie** développé en Java dans le cadre du cours de **Programmation Orientée Objet (POO)**
 
 Une pharmacie doit gérer au quotidien :
 - Des **médicaments** : savoir combien il en reste, lesquels vont bientôt expirer
@@ -12,7 +12,6 @@ Une pharmacie doit gérer au quotidien :
 
 Ce programme simule toutes ces opérations dans une **application console Java**, avec une **sauvegarde automatique** des données dans un fichier `data.json` pour ne rien perdre entre deux exécutions.
 
----
 
 ##  Objectifs pédagogiques
 
@@ -25,11 +24,7 @@ Ce projet met en pratique les concepts suivants :
 - **Fichiers** : lecture et écriture pour la persistance des données
 - **Collaboration Git** : branches, commits, pull requests
 
----
-
-
 ##  Structure du projet
-
 
 GestionPharmacie/
 Medicament.java     → Classe Medicament : ajout, recherche, stock, alertes
@@ -43,11 +38,9 @@ README.md           → Ce fichier
 
 
 
----
-
 ##  Menu principal
 
-----------------------------------------
+
    SYSTEME DE GESTION DE PHARMACIE
 ----------------------------------------
 --- MEDICAMENTS ---
@@ -64,35 +57,31 @@ README.md           → Ce fichier
 9.  Afficher les fournisseurs
 10. Modifier un fournisseur
 11. Supprimer un fournisseur
------------------------------------------
 0.  Quitter
-=========================================
-```
-
----
-
-## Exemple de ticket de caisse généré
 
 
-------------------------------------------
+
+
+## Exemple de ticket de caisse 
+
+
          TICKET DE CAISSE
-------------------------------------------
+
 N Vente     : VEN001
 Date        : 28/04/2026
------------------------------------------
-Client      : Dupont Jean
+
+Client      : Safi samira
 Tel         : 699000001
------------------------------------------
+
 Medicament  : Paracetamol 500mg
 Categorie   : Comprime
 Quantite    : 3
 Prix unit.  : 500 FCFA
------------------------------------------
+
 TOTAL       : 1500 FCFA
 
------------------------------------------
-      Merci de votre visite !
------------------------------------------
+     
+
 
 ## Persistance des données
 
@@ -109,7 +98,7 @@ json
 }
 
 
-## Workflow Git — Instructions pour chaque étudiant
+## Workflow Git Instructions pour chaque étudiant
 
 ### Cloner le projet
 
@@ -152,4 +141,5 @@ git checkout main
 git pull origin main
 javac *.java
 java Main
+
 
