@@ -42,7 +42,24 @@ class Fournisseur {
     // METHODE 2 — afficherTous
     
     public static void afficherTous() {
-        
+        if (liste.isEmpty()) {
+            System.out.println("Aucun fournisseur trouvé.");
+            return;
+        }
+         System.out.println("\n========================================");
+        System.out.printf("%-10s %-20s %-15s %-25s %-25s%n",
+                "Code", "Nom", "Telephone", "Adresse", "Email");
+        System.out.println("----------------------------------------");
+        for (Fournisseur f : liste) {
+            f.afficher();
+        }
+        System.out.println("========================================");
+        System.out.println("Total : " + liste.size() + " fournisseur(s)");
+    }
+
+    public void afficher() {
+        System.out.printf("%-10s %-20s %-15s %-25s %-25s%n",
+                codeFournisseur, nom, telephone, adresse, email);
     }
 
     
