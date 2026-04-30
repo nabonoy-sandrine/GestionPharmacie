@@ -70,7 +70,17 @@ class Fournisseur {
                                            String nouveauTel,
                                            String nouvelleAdresse,
                                            String nouveauEmail) {
-        
+        Fournisseur f = trouverParCode(code);
+        if (f == null) {
+            System.out.println("ERREUR : Fournisseur '" + code + "' introuvable.");
+            return;
+        }
+        f.nom      = nouveauNom;
+        f.telephone = nouveauTel;
+        f.adresse  = nouvelleAdresse;
+        f.email    = nouveauEmail;
+        Sauvegarde.sauvegarder();
+        System.out.println("Fournisseur '" + code + "' modifie avec succes.");
     }
 
     
