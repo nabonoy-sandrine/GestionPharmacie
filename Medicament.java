@@ -72,7 +72,7 @@ class Medicament {
     }
 
    
-    // METHODE 4 — mettreAJourStock
+    // METHODE 4 — mettreAJourStock par saidou
 public static void mettreAJourStock(String code, int quantiteAjoutee) {
     for (Medicament med : listeMedicaments) {
         if (med.code.equalsIgnoreCase(code)) {
