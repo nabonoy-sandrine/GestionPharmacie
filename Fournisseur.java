@@ -101,7 +101,9 @@ class Fournisseur {
     // METHODE 5 — trouverParCode
     
     public static Fournisseur trouverParCode(String code) {
-        
+         for (Fournisseur f : liste) {
+            if (f.codeFournisseur.equalsIgnoreCase(code)) return f;
+        }
         return null;
     }
 
