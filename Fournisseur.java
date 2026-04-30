@@ -42,7 +42,24 @@ class Fournisseur {
     // METHODE 2 — afficherTous
     
     public static void afficherTous() {
-        
+        if (liste.isEmpty()) {
+            System.out.println("Aucun fournisseur trouvé.");
+            return;
+        }
+         System.out.println("\n========================================");
+        System.out.printf("%-10s %-20s %-15s %-25s %-25s%n",
+                "Code", "Nom", "Telephone", "Adresse", "Email");
+        System.out.println("----------------------------------------");
+        for (Fournisseur f : liste) {
+            f.afficher();
+        }
+        System.out.println("========================================");
+        System.out.println("Total : " + liste.size() + " fournisseur(s)");
+    }
+
+    public void afficher() {
+        System.out.printf("%-10s %-20s %-15s %-25s %-25s%n",
+                codeFournisseur, nom, telephone, adresse, email);
     }
 
     
@@ -53,21 +70,40 @@ class Fournisseur {
                                            String nouveauTel,
                                            String nouvelleAdresse,
                                            String nouveauEmail) {
-        
+        Fournisseur f = trouverParCode(code);
+        if (f == null) {
+            System.out.println("ERREUR : Fournisseur '" + code + "' introuvable.");
+            return;
+        }
+        f.nom      = nouveauNom;
+        f.telephone = nouveauTel;
+        f.adresse  = nouvelleAdresse;
+        f.email    = nouveauEmail;
+        Sauvegarde.sauvegarder();
+        System.out.println("Fournisseur '" + code + "' modifie avec succes.");
     }
 
     
     // METHODE 4 — supprimerFournisseur
    
     public static void supprimerFournisseur(String code) {
-        
+        Fournisseur f = trouverParCode(code);
+        if (f == null) {
+            System.out.println("ERREUR : Fournisseur '" + code + "' introuvable.");
+            return;
+        }
+        liste.remove(f);
+        Sauvegarde.sauvegarder();
+        System.out.println("Fournisseur '" + f.nom + "' supprime.");
     }
 
     
     // METHODE 5 — trouverParCode
     
     public static Fournisseur trouverParCode(String code) {
-        
+         for (Fournisseur f : liste) {
+            if (f.codeFournisseur.equalsIgnoreCase(code)) return f;
+        }
         return null;
     }
 
