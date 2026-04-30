@@ -87,7 +87,14 @@ class Fournisseur {
     // METHODE 4 — supprimerFournisseur
    
     public static void supprimerFournisseur(String code) {
-        
+        Fournisseur f = trouverParCode(code);
+        if (f == null) {
+            System.out.println("ERREUR : Fournisseur '" + code + "' introuvable.");
+            return;
+        }
+        liste.remove(f);
+        Sauvegarde.sauvegarder();
+        System.out.println("Fournisseur '" + f.nom + "' supprime.");
     }
 
     
