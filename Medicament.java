@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 class Medicament {
 
-    
+    // ════════════════════════════════════════
     // ATTRIBUTS
-   
+    // ════════════════════════════════════════
     String codeMedicament;
     String nom;
     double prix;
@@ -15,9 +15,9 @@ class Medicament {
 
     static ArrayList<Medicament> liste = new ArrayList<>();
 
-    
+    // ════════════════════════════════════════
     // CONSTRUCTEUR
-    
+    // ════════════════════════════════════════
     public Medicament(String codeMedicament, String nom,
                       double prix, int quantiteStock,
                       int stockMinimum, String datePeremption,
@@ -31,9 +31,9 @@ class Medicament {
         this.categorie      = categorie;
     }
 
-    
+    // ════════════════════════════════════════
     // METHODE 1 — ajouterMedicament
-   
+    // ════════════════════════════════════════
     public static void ajouterMedicament(String code, String nom,
                                          double prix, int stock,
                                          int stockMin,
@@ -52,11 +52,23 @@ class Medicament {
         System.out.println("Medicament '" + nom + "' ajoute avec succes.");
     }
 
-    
+    // ════════════════════════════════════════
     // METHODE 2 — afficherInventaire
-    
+    // ════════════════════════════════════════
     public static void afficherInventaire() {
-        
+        if (liste.isEmpty()) {
+            System.out.println("Aucun medicament enregistre.");
+            return;
+        }
+        System.out.println("\n========================================");
+        System.out.printf("%-10s %-20s %-10s %-8s %-12s %-15s%n",
+                "Code", "Nom", "Prix", "Stock", "Peremption", "Categorie");
+        System.out.println("----------------------------------------");
+        for (Medicament m : liste) {
+            m.afficher();
+        }
+        System.out.println("========================================");
+        System.out.println("Total : " + liste.size() + " medicament(s)");
     }
 
     public void afficher() {
@@ -64,71 +76,113 @@ class Medicament {
                 codeMedicament, nom, prix, quantiteStock, datePeremption, categorie);
     }
 
-    
+    // ════════════════════════════════════════
     // METHODE 3 — rechercherMedicament
-    
+    // ════════════════════════════════════════
     public static void rechercherMedicament(String recherche) {
-        
+        boolean trouve = false;
+        for (Medicament m : liste) {
+            if (m.codeMedicament.equalsIgnoreCase(recherche)
+                    || m.nom.toLowerCase().contains(recherche.toLowerCase())) {
+                if (!trouve) {
+                    System.out.println("\n=== Resultats de recherche ===");
+                    System.out.printf("%-10s %-20s %-10s %-8s %-12s %-15s%n",
+                            "Code", "Nom", "Prix", "Stock", "Peremption", "Categorie");
+                    System.out.println("------------------------------");
+                }
+                m.afficher();
+                trouve = true;
+            }
+        }
+        if (!trouve) {
+            System.out.println("Aucun medicament trouve pour : " + recherche);
+        }
     }
 
-   
-    // METHODE 4 — mettreAJourStock par saidou
-public static void mettreAJourStock(String code, int quantiteAjoutee) {
-    for (Medicament med : listeMedicaments) {
-        if (med.code.equalsIgnoreCase(code)) {
-            med.quantite += quantiteAjoutee;
-            System.out.println("Stock mis à jour pour : " + med.nom);
-            System.out.println("Nouvelle quantité : " + med.quantite);
+    // ════════════════════════════════════════
+    // METHODE 4 — mettreAJourStock
+    // ════════════════════════════════════════
+    public static void mettreAJourStock(String code, int quantiteAjoutee) {
+        Medicament m = trouverParCode(code);
+        if (m == null) {
+            System.out.println("ERREUR : Medicament '" + code + "' introuvable.");
             return;
         }
+        m.quantiteStock += quantiteAjoutee;
+        Sauvegarde.sauvegarder();
+        System.out.println("Stock mis a jour. Nouveau stock de '" + m.nom + "' : " + m.quantiteStock);
     }
-    System.out.println("Médicament introuvable.");
-}
 
-
-// METHODE 5 — alerteStockBas
-public static void alerteStockBas() {
-    System.out.println("=== Médicaments en stock bas ===");
-    
-    for (Medicament med : listeMedicaments) {
-        if (med.quantite <= 5) {
-            System.out.println(
-                med.code + " | " +
-                med.nom + " | Quantité : " +
-                med.quantite
-            );
+    // ════════════════════════════════════════
+    // METHODE 5 — alerteStockBas
+    // ════════════════════════════════════════
+    public static void alerteStockBas() {
+        boolean alerte = false;
+        for (Medicament m : liste) {
+            if (m.quantiteStock < m.stockMinimum) {
+                if (!alerte) {
+                    System.out.printf("%-10s %-20s %-10s %-10s%n",
+                            "Code", "Nom", "Stock", "Minimum");
+                    System.out.println("------------------------------------------");
+                }
+                System.out.printf("%-10s %-20s %-10d %-10d  <-- STOCK BAS%n",
+                        m.codeMedicament, m.nom, m.quantiteStock, m.stockMinimum);
+                alerte = true;
+            }
         }
-    }
-}
-
-
-// METHODE 6 — alertePeremption
-public static void alertePeremption() {
-   System.out.println("=== Médicaments en stock bas ===");
-    
-    for (Medicament med : listeMedicaments) {
-        if (med.quantite <= 5) {
-            System.out.println(
-                med.code + " | " +
-                med.nom + " | Quantité : " +
-                med.quantite
-            );
+        if (!alerte) {
+            System.out.println("Aucun medicament en stock bas.");
         }
     }
 
+    // ════════════════════════════════════════
+    // METHODE 6 — alertePeremption
+    // Compare les dates au format JJ/MM/AAAA
+    // ════════════════════════════════════════
+    public static void alertePeremption() {
+        boolean alerte = false;
+        // Date du jour
+        java.time.LocalDate today = java.time.LocalDate.now();
+        java.time.format.DateTimeFormatter fmt =
+                java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    
+        for (Medicament m : liste) {
+            try {
+                java.time.LocalDate dateExp = java.time.LocalDate.parse(m.datePeremption, fmt);
+                // Alerte si peremption dans moins de 30 jours ou deja depassee
+                long joursRestants = java.time.temporal.ChronoUnit.DAYS.between(today, dateExp);
+                if (joursRestants <= 30) {
+                    if (!alerte) {
+                        System.out.printf("%-10s %-20s %-12s %-15s%n",
+                                "Code", "Nom", "Peremption", "Jours restants");
+                        System.out.println("-------------------------------------------");
+                    }
+                    String statut = joursRestants < 0 ? "PERIME !" : joursRestants + " jours";
+                    System.out.printf("%-10s %-20s %-12s %-15s%n",
+                            m.codeMedicament, m.nom, m.datePeremption, statut);
+                    alerte = true;
+                }
+            } catch (Exception e) {
+                System.out.println("Date invalide pour : " + m.nom + " (" + m.datePeremption + ")");
+            }
+        }
+        if (!alerte) {
+            System.out.println("Aucun medicament proche de la peremption.");
+        }
+    }
+
+    // ════════════════════════════════════════
     // METHODE 7 — verifierStock
-    
+    // ════════════════════════════════════════
     public static boolean verifierStock(String code, int quantiteDemandee) {
         Medicament m = trouverParCode(code);
         if (m == null) return false;
         return m.quantiteStock >= quantiteDemandee;
     }
 
-    
+    // ════════════════════════════════════════
     // METHODE 8 — trouverParCode
-   
+    // ════════════════════════════════════════
     public static Medicament trouverParCode(String code) {
         for (Medicament m : liste) {
             if (m.codeMedicament.equalsIgnoreCase(code)) {
@@ -138,9 +192,9 @@ public static void alertePeremption() {
         return null;
     }
 
-    
+    // ════════════════════════════════════════
     // SERIALISATION JSON (pour Sauvegarde.java)
-    
+    // ════════════════════════════════════════
     public String toJson() {
         return String.format(
             "{\"codeMedicament\":\"%s\",\"nom\":\"%s\",\"prix\":%.2f," +
