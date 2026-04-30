@@ -73,25 +73,49 @@ class Medicament {
 
    
     // METHODE 4 — mettreAJourStock
+public static void mettreAJourStock(String code, int quantiteAjoutee) {
+    for (Medicament med : listeMedicaments) {
+        if (med.code.equalsIgnoreCase(code)) {
+            med.quantite += quantiteAjoutee;
+            System.out.println("Stock mis à jour pour : " + med.nom);
+            System.out.println("Nouvelle quantité : " + med.quantite);
+            return;
+        }
+    }
+    System.out.println("Médicament introuvable.");
+}
+
+
+// METHODE 5 — alerteStockBas
+public static void alerteStockBas() {
+    System.out.println("=== Médicaments en stock bas ===");
     
-    public static void mettreAJourStock(String code, int quantiteAjoutee) {
-        
-        
+    for (Medicament med : listeMedicaments) {
+        if (med.quantite <= 5) {
+            System.out.println(
+                med.code + " | " +
+                med.nom + " | Quantité : " +
+                med.quantite
+            );
+        }
+    }
+}
+
+
+// METHODE 6 — alertePeremption
+public static void alertePeremption() {
+   System.out.println("=== Médicaments en stock bas ===");
+    
+    for (Medicament med : listeMedicaments) {
+        if (med.quantite <= 5) {
+            System.out.println(
+                med.code + " | " +
+                med.nom + " | Quantité : " +
+                med.quantite
+            );
+        }
     }
 
-    
-    // METHODE 5 — alerteStockBas
-   
-    public static void alerteStockBas() {
-        
-    }
-
-    
-    // METHODE 6 — alertePeremption
-    
-    public static void alertePeremption() {
-        
-    }
 
     
     // METHODE 7 — verifierStock
