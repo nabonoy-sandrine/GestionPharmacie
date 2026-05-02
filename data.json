@@ -1,0 +1,9 @@
+{
+  "medicaments": [
+    {"codeMedicament":"23","nom":"GFH","prix":12,00,"quantiteStock":0,"stockMinimum":23,"datePeremption":"1/2/2022","categorie":"Q"}
+  ],
+  "fournisseurs": [
+  ],
+  "ventes": [
+  ]
+}

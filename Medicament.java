@@ -60,14 +60,14 @@ class Medicament {
             System.out.println("Aucun medicament enregistre.");
             return;
         }
-        System.out.println("\n========================================");
+        System.out.println("\n");
         System.out.printf("%-10s %-20s %-10s %-8s %-12s %-15s%n",
                 "Code", "Nom", "Prix", "Stock", "Peremption", "Categorie");
-        System.out.println("----------------------------------------");
+        System.out.println("");
         for (Medicament m : liste) {
             m.afficher();
         }
-        System.out.println("========================================");
+        System.out.println("");
         System.out.println("Total : " + liste.size() + " medicament(s)");
     }
 
@@ -88,7 +88,7 @@ class Medicament {
                     System.out.println("\n=== Resultats de recherche ===");
                     System.out.printf("%-10s %-20s %-10s %-8s %-12s %-15s%n",
                             "Code", "Nom", "Prix", "Stock", "Peremption", "Categorie");
-                    System.out.println("------------------------------");
+                    System.out.println("");
                 }
                 m.afficher();
                 trouve = true;
@@ -123,7 +123,7 @@ class Medicament {
                 if (!alerte) {
                     System.out.printf("%-10s %-20s %-10s %-10s%n",
                             "Code", "Nom", "Stock", "Minimum");
-                    System.out.println("------------------------------------------");
+                    System.out.println("");
                 }
                 System.out.printf("%-10s %-20s %-10d %-10d  <-- STOCK BAS%n",
                         m.codeMedicament, m.nom, m.quantiteStock, m.stockMinimum);
@@ -155,7 +155,7 @@ class Medicament {
                     if (!alerte) {
                         System.out.printf("%-10s %-20s %-12s %-15s%n",
                                 "Code", "Nom", "Peremption", "Jours restants");
-                        System.out.println("-------------------------------------------");
+                        System.out.println("");
                     }
                     String statut = joursRestants < 0 ? "PERIME !" : joursRestants + " jours";
                     System.out.printf("%-10s %-20s %-12s %-15s%n",
