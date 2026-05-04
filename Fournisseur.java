@@ -21,6 +21,21 @@ class Fournisseur {
     public String getCodeFournisseur() {
     return codeFournisseur;
 }
+    public void setNom(String nom) {
+    this.nom = nom;
+}
+
+public void setTelephone(String telephone) {
+    this.telephone = telephone;
+}
+
+public void setAdresse(String adresse) {
+    this.adresse = adresse;
+}
+
+public void setEmail(String email) {
+    this.email = email;
+}
     
     // METHODE 1 — ajouterFournisseur
     
@@ -97,23 +112,52 @@ private static boolean existeFournisseur(String code) {
     
     // METHODE 3 — modifierFournisseur
    
-    public static void modifierFournisseur(String code,
-                                           String nouveauNom,
-                                           String nouveauTel,
-                                           String nouvelleAdresse,
-                                           String nouveauEmail) {
-        Fournisseur f = trouverParCode(code);
-        if (f == null) {
-            System.out.println("ERREUR : Fournisseur '" + code + "' introuvable.");
-            return;
-        }
-        f.nom      = nouveauNom;
-        f.telephone = nouveauTel;
-        f.adresse  = nouvelleAdresse;
-        f.email    = nouveauEmail;
-        Sauvegarde.sauvegarder();
-        System.out.println("Fournisseur '" + code + "' modifie avec succes.");
+   public static void modifierFournisseur(String code,
+                                       String nouveauNom,
+                                       String nouveauTel,
+                                       String nouvelleAdresse,
+                                       String nouveauEmail) {
+
+    // 🔹 1. Validation du code
+    if (code == null || code.trim().isEmpty()) {
+        System.out.println("ERREUR : Code fournisseur invalide.");
+        return;
     }
+
+    // 🔹 2. Recherche du fournisseur
+    Fournisseur f = trouverParCode(code.trim());
+
+    if (f == null) {
+        System.out.println("ERREUR : Fournisseur '" + code + "' introuvable.");
+        return;
+    }
+
+    // 🔹 3. Mise à jour intelligente (évite d'écraser avec null ou vide)
+    if (nouveauNom != null && !nouveauNom.trim().isEmpty()) {
+        f.setNom(nouveauNom.trim());
+    }
+
+    if (nouveauTel != null && !nouveauTel.trim().isEmpty()) {
+        f.setTelephone(nouveauTel.trim());
+    }
+
+    if (nouvelleAdresse != null && !nouvelleAdresse.trim().isEmpty()) {
+        f.setAdresse(nouvelleAdresse.trim());
+    }
+
+    if (nouveauEmail != null && !nouveauEmail.trim().isEmpty()) {
+        f.setEmail(nouveauEmail.trim());
+    }
+
+    // 🔹 4. Sauvegarde sécurisée
+    try {
+        Sauvegarde.sauvegarder();
+        System.out.println("Fournisseur '" + code + "' modifié avec succès.");
+    } catch (Exception e) {
+        System.out.println("ERREUR lors de la sauvegarde !");
+        e.printStackTrace();
+    }
+}
 
     
     // METHODE 4 — supprimerFournisseur
