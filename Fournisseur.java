@@ -36,7 +36,19 @@ public void setAdresse(String adresse) {
 public void setEmail(String email) {
     this.email = email;
 }
-    
+public String getNom() {
+    return nom;
+}
+public String getTelephone() {
+    return telephone;
+}
+public String getAdresse() {
+    return adresse;
+}
+public String getEmail() {
+    return email;
+}
+
     // METHODE 1 — ajouterFournisseur
     
    public static void ajouterFournisseur(String code, String nom,
@@ -161,18 +173,39 @@ private static boolean existeFournisseur(String code) {
 
     
     // METHODE 4 — supprimerFournisseur
-   
-    public static void supprimerFournisseur(String code) {
-        Fournisseur f = trouverParCode(code);
-        if (f == null) {
-            System.out.println("ERREUR : Fournisseur '" + code + "' introuvable.");
-            return;
-        }
-        liste.remove(f);
-        Sauvegarde.sauvegarder();
-        System.out.println("Fournisseur '" + f.nom + "' supprime.");
+   public static void supprimerFournisseur(String code) {
+
+    // 🔹 1. Validation du code
+    if (code == null || code.trim().isEmpty()) {
+        System.out.println("ERREUR : Code fournisseur invalide.");
+        return;
     }
 
+    // 🔹 2. Recherche du fournisseur
+    Fournisseur f = trouverParCode(code.trim());
+
+    if (f == null) {
+        System.out.println("ERREUR : Fournisseur '" + code + "' introuvable.");
+        return;
+    }
+
+    // 🔹 3. Suppression sécurisée
+    boolean supprime = liste.remove(f);
+
+    if (!supprime) {
+        System.out.println("ERREUR : Suppression échouée.");
+        return;
+    }
+
+    // 🔹 4. Sauvegarde protégée
+    try {
+        Sauvegarde.sauvegarder();
+        System.out.println("Fournisseur '" + f.getNom() + "' supprimé avec succès.");
+    } catch (Exception e) {
+        System.out.println("ERREUR lors de la sauvegarde !");
+        e.printStackTrace();
+    }
+}
     
     // METHODE 5 — trouverParCode
     
