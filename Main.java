@@ -10,26 +10,22 @@ class Main {
         Sauvegarde.charger();  // Charger les donnees sauvegardees au demarrage
 
         while (true) {
-            System.out.println("\n----------------------------------------------------");
             System.out.println("               SYSTEME DE GESTION DE PHARMACIE      ");
-            System.out.println("-----------------------------------------------------");
-            System.out.println("                    --- MEDICAMENTS ---");
+            System.out.println("                     MEDICAMENTS ");
             System.out.println("                1. Ajouter un medicament");
             System.out.println("                2. Afficher l inventaire");
             System.out.println("                3. Rechercher un medicament");
             System.out.println("                4. Mettre a jour le stock");
             System.out.println("                5. Alertes Stock et Peremption");
-            System.out.println("                    --- VENTES ---");
+            System.out.println("                     VENTES ");
             System.out.println("                6. Effectuer une vente");
             System.out.println("                7. Historique des ventes");
-            System.out.println("                    --- FOURNISSEURS ---");
+            System.out.println("                     FOURNISSEURS ");
             System.out.println("                8. Ajouter un fournisseur");
             System.out.println("                9. Afficher les fournisseurs");
             System.out.println("                10. Modifier un fournisseur");
             System.out.println("                11. Supprimer un fournisseur");
-            System.out.println("-----------------------------------------------------------");
             System.out.println("0. Quitter");
-            System.out.println("-----------------------------------------------------------");
             System.out.print("Entrez votre choix : ");
 
             int choix = lireEntier();
@@ -92,9 +88,9 @@ class Main {
     
     static void afficherAlertes() {
         System.out.println("\n      ALERTES      ");
-        System.out.println("\n-- Medicaments en stock bas --");
+        System.out.println("\n Medicaments en stock bas ");
         Medicament.alerteStockBas();
-        System.out.println("\n-- Medicaments proches de la peremption (<=30 jours) --");
+        System.out.println("\n Medicaments proches de la peremption (<=30 jours) ");
         Medicament.alertePeremption();
     }
 
@@ -104,13 +100,13 @@ class Main {
     static void effectuerVente() {
         System.out.println("\n      EFFECTUER UNE VENTE     ");
 
-        System.out.println("-- Informations client --");
+        System.out.println(" Informations client ");
         System.out.print("Nom       : "); String nom    = clavier.nextLine();
         System.out.print("Prenom    : "); String prenom = clavier.nextLine();
         System.out.print("Telephone : "); String tel    = clavier.nextLine();
         Client client = new Client(nom, prenom, tel);
 
-        System.out.println("\n-- Informations vente --");
+        System.out.println("\n Informations vente ");
         System.out.print("Code vente              : "); String codeVente = clavier.nextLine();
         System.out.print("Code medicament         : "); String codeMed   = clavier.nextLine();
         System.out.print("Quantite                : "); int qte           = lireEntier();
@@ -123,7 +119,7 @@ class Main {
     // OPTION 8 — Ajouter un fournisseur
     
     static void ajouterFournisseur() {
-        System.out.println("\n  -------- AJOUTER UN FOURNISSEUR-------- ");
+        System.out.println("\n   AJOUTER UN FOURNISSEUR ");
         System.out.print("Code      : "); String code = clavier.nextLine();
         System.out.print("Nom       : "); String nom  = clavier.nextLine();
         System.out.print("Telephone : "); String tel  = clavier.nextLine();
@@ -135,7 +131,7 @@ class Main {
     // Modifier un fournisseur
  
     static void modifierFournisseur() {
-        System.out.println("\n -------- MODIFIER UN FOURNISSEUR -------- ");
+        System.out.println("\n  MODIFIER UN FOURNISSEUR  ");
         System.out.print("Code du fournisseur a modifier : "); String code = clavier.nextLine();
         System.out.print("Nouveau nom                    : "); String nom  = clavier.nextLine();
         System.out.print("Nouveau telephone              : "); String tel  = clavier.nextLine();
@@ -148,7 +144,7 @@ class Main {
     // OPTION 11 — Supprimer un fournisseur
     
     static void supprimerFournisseur() {
-        System.out.println("\n--------SUPPRIMER UN FOURNISSEUR ------");
+        System.out.println("\nSUPPRIMER UN FOURNISSEUR ");
         System.out.print("Code du fournisseur a supprimer : "); String code = clavier.nextLine();
         Fournisseur.supprimerFournisseur(code);
     }
