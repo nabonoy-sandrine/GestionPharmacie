@@ -18,25 +18,57 @@ class Fournisseur {
         this.adresse         = adresse;
         this.email           = email;
     }
-
+    public String getCodeFournisseur() {
+    return codeFournisseur;
+}
     
     // METHODE 1 — ajouterFournisseur
     
-    public static void ajouterFournisseur(String code, String nom,
-                                          String telephone,
-                                          String adresse,
-                                          String email) {
+   public static void ajouterFournisseur(String code, String nom,
+                                      String telephone,
+                                      String adresse,
+                                      String email) {
+
+    // 🔹 1. Validation des données
+    if (code == null || code.trim().isEmpty()) {
+        System.out.println("Erreur : Le code fournisseur est obligatoire.");
+        return;
+    }
+
+    if (nom == null || nom.trim().isEmpty()) {
+        System.out.println("Erreur : Le nom est obligatoire.");
+        return;
+    }
+
+    // 🔹 2. Vérification d'existence (plus propre)
+    if (existeFournisseur(code)) {
+        System.out.println("Erreur : Un fournisseur avec ce code existe déjà.");
+        return;
+    }
+
+    // 🔹 3. Création + ajout
+    Fournisseur fournisseur = new Fournisseur(code.trim(), nom.trim(),
+                                              telephone, adresse, email);
+
+    liste.add(fournisseur);
+
+    // 🔹 4. Sauvegarde sécurisée
+    try {
+        Sauvegarde.sauvegarder();
+        System.out.println("Fournisseur ajouté avec succès.");
+    } catch (Exception e) {
+        System.out.println("Erreur lors de la sauvegarde !");
+        e.printStackTrace();
+    }
+}
+private static boolean existeFournisseur(String code) {
     for (Fournisseur f : liste) {
-        if (f.codeFournisseur.equals(code)) {
-            System.out.println("Erreur : Un fournisseur avec ce code existe déjà.");
-            return;
+        if (f.getCodeFournisseur().equalsIgnoreCase(code.trim())) {
+            return true;
         }
-  
     }
-    liste.add(new Fournisseur(code, nom, telephone, adresse, email));
-    Sauvegarde.sauvegarder();
-    System.out.println("Fournisseur ajouté avec succès.");
-    }
+    return false;
+}
 
     
     // METHODE 2 — afficherTous
