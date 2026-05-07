@@ -1,34 +1,15 @@
 import java.io.*;
 import java.util.ArrayList;
 
-// ════════════════════════════════════════════════════════════
-//  SAUVEGARDE.java
-//  Gere la persistance des donnees dans le fichier data.json
-//  Toutes les donnees (medicaments, fournisseurs, ventes)
-//  sont sauvegardees automatiquement apres chaque modification
-//  et rechargees au demarrage du programme.
-//
-//  Format du fichier data.json :
-//  {
-//    "medicaments": [ {...}, {...} ],
-//    "fournisseurs": [ {...}, {...} ],
-//    "ventes":       [ {...}, {...} ]
-//  }
-// ════════════════════════════════════════════════════════════
 class Sauvegarde {
 
     static final String FICHIER = "data.json";
-
-    // ════════════════════════════════════════
-    // SAUVEGARDER — ecrit toutes les donnees
-    // dans data.json (appele automatiquement)
-    // ════════════════════════════════════════
+    //fonction  SAUVEGARDER  ecrit toutes les donnees dans data.json 
     public static void sauvegarder() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(FICHIER))) {
 
             pw.println("{");
-
-            // ----- Medicaments -----
+            // Medicaments
             pw.println("  \"medicaments\": [");
             for (int i = 0; i < Medicament.liste.size(); i++) {
                 String ligne = "    " + Medicament.liste.get(i).toJson();
@@ -37,7 +18,7 @@ class Sauvegarde {
             }
             pw.println("  ],");
 
-            // ----- Fournisseurs -----
+            // Fournisseurs
             pw.println("  \"fournisseurs\": [");
             for (int i = 0; i < Fournisseur.liste.size(); i++) {
                 String ligne = "    " + Fournisseur.liste.get(i).toJson();
@@ -46,7 +27,7 @@ class Sauvegarde {
             }
             pw.println("  ],");
 
-            // ----- Ventes -----
+            //  Ventes 
             pw.println("  \"ventes\": [");
             for (int i = 0; i < Vente.liste.size(); i++) {
                 String ligne = "    " + Vente.liste.get(i).toJson();
@@ -62,10 +43,7 @@ class Sauvegarde {
         }
     }
 
-    // ════════════════════════════════════════
-    // CHARGER — lit data.json au demarrage
-    // et reconstruit les listes en memoire
-    // ════════════════════════════════════════
+    // fonction CHARGER lit data.json au demarrage et reconstruit les listes en memoire
     public static void charger() {
         File f = new File(FICHIER);
         if (!f.exists()) {
@@ -85,7 +63,7 @@ class Sauvegarde {
 
             String json = sb.toString();
 
-            // ----- Charger medicaments -----
+            // Charger medicaments 
             String blockMed = extraireBloc(json, "medicaments");
             if (!blockMed.isEmpty()) {
                 ArrayList<String> objets = extraireObjets(blockMed);
@@ -94,7 +72,7 @@ class Sauvegarde {
                 }
             }
 
-            // ----- Charger fournisseurs -----
+            // Charger fournisseurs 
             String blockFour = extraireBloc(json, "fournisseurs");
             if (!blockFour.isEmpty()) {
                 ArrayList<String> objets = extraireObjets(blockFour);
@@ -103,7 +81,7 @@ class Sauvegarde {
                 }
             }
 
-            // ----- Charger ventes -----
+            // Charger ventes 
             String blockVente = extraireBloc(json, "ventes");
             if (!blockVente.isEmpty()) {
                 ArrayList<String> objets = extraireObjets(blockVente);
@@ -121,12 +99,8 @@ class Sauvegarde {
             System.out.println("[SAUVEGARDE] ERREUR lecture : " + e.getMessage());
         }
     }
-
-    // ════════════════════════════════════════
-    // Utilitaire : extrait le contenu d'un
-    // tableau JSON  "cle": [ ... ]
-    // Tolere les espaces apres ":" et "["
-    // ════════════════════════════════════════
+    // Utilitaire : extrait le contenu d'un  tableau JSON  "cle": [ ... ] Tolere les espaces apres ":" et "["
+   
     private static String extraireBloc(String json, String cle) {
         // Chercher "cle" puis avancer jusqu'au [
         String motif = "\"" + cle + "\"";
@@ -149,10 +123,8 @@ class Sauvegarde {
         return json.substring(pos, i - 1).trim();
     }
 
-    // ════════════════════════════════════════
-    // Utilitaire : extrait les objets JSON {}
-    // d'un tableau JSON
-    // ════════════════════════════════════════
+    // Utilitaire  extrait les objets JSON {} d'un tableau JSON
+    
     private static ArrayList<String> extraireObjets(String bloc) {
         ArrayList<String> objets = new ArrayList<>();
         if (bloc.isEmpty()) return objets;
